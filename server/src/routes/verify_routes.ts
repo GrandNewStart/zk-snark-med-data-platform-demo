@@ -24,7 +24,7 @@ router.post('/:id', async (req: Request, res: Response)=>{
     }
     const proof_path = path.join(__dirname, '../..', 'proofs', proof_id, 'proof.json')
     const vkey_path = path.join(__dirname, '../..', 'proofs', proof_id, 'verification_key.json')
-    const public_path = path.join(__dirname, '../..', 'circuits/compiled', matchingProof.data_request_id, 'public.json')
+    const public_path = path.join(__dirname, '../..', 'circuits', matchingProof.data_request_id, 'public.json')
     try {
         const vKey = JSON.parse(fs.readFileSync(vkey_path, 'utf-8'))
         const publicSignals = JSON.parse(fs.readFileSync(public_path, 'utf-8'))

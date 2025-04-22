@@ -32,14 +32,14 @@ router.post('/', async (req: Request, res: Response) => {
   const newRequest = new DataRequest(user_id, data_type, min, max, leq, geq)
 
   // Create circuit directory
-  const circuitDir = path.join(__dirname, '../..', 'circuits', 'compiled', newRequest.id)
+  const circuitDir = path.join(__dirname, '../..', 'circuits', newRequest.id)
   await ensureDir(circuitDir)
 
   // Create public.json
   fs.writeFileSync(path.join(circuitDir, 'public.json'), JSON.stringify({min, max}));
 
   // Prepare circuit generation
-  const circomPath = path.join(__dirname, '../..', 'circuits', 'templates', 'range_proof.circom')
+  const circomPath = path.join(__dirname, '../..', 'circom_templates', 'range_proof.circom')
 
   // Generate circuit
   try {

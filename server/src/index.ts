@@ -42,10 +42,14 @@ async function initializeEnvironment() {
 
   // Generate trusted setup
   const bn128 = await buildBn128()
-  await powersOfTau.newAccumulator(bn128, 10, 'setup_1.ptau')
-  await powersOfTau.contribute('setup_1.ptau', 'setup_2.ptau', 'First contribution', 'random')
-  await powersOfTau.contribute('setup_2.ptau', 'setup_3.ptau', 'Second contribution', 'entropy')
-  await powersOfTau.preparePhase2('setup_3.ptau', 'setup_final.ptau')
+  const setup1 = path.join(setupDir, 'setup_1.ptau')
+  const setup2 = path.join(setupDir, 'setup_2.ptau')
+  const setup3 = path.join(setupDir, 'setup_3.ptau')
+  const setupFinal = path.join(setupDir, 'setup_final.ptau')
+  await powersOfTau.newAccumulator(bn128, 10, setup1)
+  await powersOfTau.contribute(setup1, setup2, 'First contribution', 'random')
+  await powersOfTau.contribute(setup2, setup3, 'Second contribution', 'entropy')
+  await powersOfTau.preparePhase2(setup3, setupFinal)
   
   console.log('Environment initialized.')
 }

@@ -24,7 +24,7 @@ router.post('/', async (req: Request, res: Response) => {
     res.status(400).json({ error: 'Invalid DataRequest ID' })
     return
   }
-  const circuitDir = path.join(__dirname, '../..', 'circuits', 'compiled', matchingRequest.id)
+  const circuitDir = path.join(__dirname, '../..', 'circuits', matchingRequest.id)
 
   // Create Proof instance & directory
   const newProof = new Proof(matchingRequest.id, user_id)
@@ -50,18 +50,12 @@ router.post('/', async (req: Request, res: Response) => {
   }
 
   // Generate zkey
-  const setup_path = path.join(__dirname, '../..', 'setup_final.ptau')
+  const setup_path = path.join(__dirname, '../../trusted_setup', 'setup_final.ptau')
   const circuit_path = path.join(circuitDir, 'range_proof.r1cs')
   const zkey_path = path.join(proofDir, 'range_proof.zkey')
   const vkey_path = path.join(proofDir, 'verification_key.json')
   try {
-    // const r1csFd = await fs.promises.open(circuit_path, 'r')
-    // const ptauFd = await fs.promises.open(setup_path, 'r')
-    // const zkeyFd = await fs.promises.open(zkey_path, 'w')
     await snarkjs.zKey.newZKey(circuit_path, setup_path, zkey_path)
-    // await r1csFd.close()
-    // await ptauFd.close()
-    // await zkeyFd.close()
     const stats = fs.statSync(zkey_path)
     if (stats.size === 0) {
       throw new Error('Generated zkey file is empty')

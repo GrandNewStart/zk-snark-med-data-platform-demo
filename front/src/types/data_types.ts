@@ -1,0 +1,15 @@
+export const dataTypes = [
+    'any_number',
+    'blood_pressure',
+    'fasting_blood_sugar',
+    'hemoglobin',
+    'total_cholesterol',
+    'high_density_cholesterol',
+    'low_density_cholesterol',
+    'neutral_fat',
+    'serum_creatinine',
+    'e_gfr',
+    'ast_gsot',
+    'alt_sgpt',
+    'y_gtp',
+  ];

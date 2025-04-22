@@ -1,0 +1,25 @@
+title Data Response Registration
+
+participant DP
+participant Server
+participant RequestDB
+participant CircuitDB
+participant ProofDB
+
+DP<-Server: **data-request**\n{id, user_id, data_type, min, max, include_min, include_max, exp_date}
+DP->DP: check exp_date
+DP->DP: check data_type
+DP->DP: check range
+alt if not valid
+DP->DP: end
+end
+DP->Server: **data-response**\n{userid, data_req_id, value}
+Server->RequestDB: **fetch-request**\n{data_req_id}
+RequestDB-->Server: data-request
+Server->CircuitDB: **fetch-circuit**\n{circuit_id}
+CircuitDB-->Server: circuit
+Server->Server: **generate witness**\nwtns = {value + r1cs + js}
+Server->Server: **generate proof**\nproof = {wtns, proving_key, public}\n*public = {min, max, include_min, include_max}
+Server->ProofDB: **store proof**\n{user_id, data-req-id, circuit-id, proof}
+ProofDB-->Server: proof_id
+Server-->DP: **data-response-response**\nproof_id

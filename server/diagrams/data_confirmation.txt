@@ -1,0 +1,25 @@
+title Data Confirmation
+
+participant DC
+participant Server
+participant CircuitDB
+participant ProofDB
+
+Server->DC: **data-response-list**\n{circuit_id, [{user_id, proof_id}]}
+alt if data confirmed without proving
+DC->Server: **data-confirm**
+note over DC, Server: purchase process
+Server-->DC: **data-exchange-channel**
+end
+
+DC->Server: **request-proofs**\n{circuit_id, [proof_id]}
+Server->ProofDB: **fetch-proofs**\n[proof_id]
+ProofDB-->Server: [proof]
+Server->CircuitDB: **request-circuit**\n{circuit_id}
+CircuitDB-->Server:circuit(verifying_key)
+Server-->DC: **request-proofs-response**\n{verifying_key, [proof]}
+DC->DC: for (proof in [proof])\n  verify(proof, public, verifying_key)
+DC->Server: **data-confirm**
+note over DC, Server: purchase process
+Server-->DC: **data-exchange-channel**
+end

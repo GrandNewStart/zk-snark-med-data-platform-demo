@@ -1,0 +1,10 @@
+title Data Request Registration
+
+DC->Server: **data-request**\n{datatype, min, max, include_min, include_max}
+Server->Server: **generate-circuit**\ngenerate r1csc ircuit\nbased on range proof circom template
+Server->Server: **generate-zkey**\n{proving_key, verifying_key}
+Server->CircuitDB: **store circuit**\n{circom, js-files, r1cs, sym, proving_key, verifying_key}
+CircuitDB-->Server: circuit_id
+Server->RequestDB: **store data-request**\n{id, user_id, circuit_id, data_type, min, max, include_min, include_max exp_date}
+RequestDB-->Server: data_req_id
+Server-->DC: **data-request-response**\n{data-req-id, circuit-id}

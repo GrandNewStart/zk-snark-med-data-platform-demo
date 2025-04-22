@@ -1,0 +1,33 @@
+{
+  "name": "zkp-med-data-platform",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "ffjavascript": "^0.3.1",
+    "fs-extra": "^11.3.0",
+    "path": "^0.12.7",
+    "snarkjs": "^0.7.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.14.0",
+    "@types/snarkjs": "^0.7.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

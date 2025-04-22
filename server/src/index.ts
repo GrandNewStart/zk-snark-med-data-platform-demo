@@ -18,10 +18,17 @@ app.use('/verify', verifyRoutes)
 
 async function initializeEnvironment() {
   const rootDir = path.join(__dirname, '..')
-  const circuitCompiledDir = path.join(rootDir, 'circuits', 'compiled')
+  const circuitCompiledDir = path.join(rootDir, 'circuits')
   const proofsDir = path.join(rootDir, 'proofs')
+  const setupDir = path.join(rootDir, 'trusted_setup')
 
-  // Clear circuits/compiled
+  // Clear setups
+  if (fs.existsSync(setupDir)) {
+    fs.rmSync(setupDir, { recursive: true, force: true })
+    fs.mkdirSync(setupDir)
+  }
+
+  // Clear circuits
   if (fs.existsSync(circuitCompiledDir)) {
     fs.rmSync(circuitCompiledDir, { recursive: true, force: true })
     fs.mkdirSync(circuitCompiledDir)
@@ -31,14 +38,6 @@ async function initializeEnvironment() {
   if (fs.existsSync(proofsDir)) {
     fs.rmSync(proofsDir, { recursive: true, force: true })
     fs.mkdirSync(proofsDir)
-  }
-
-  // Delete old ptau files
-  const files = fs.readdirSync(rootDir)
-  for (const file of files) {
-    if (file.endsWith('.ptau')) {
-      fs.unlinkSync(path.join(rootDir, file))
-    }
   }
 
   // Generate trusted setup

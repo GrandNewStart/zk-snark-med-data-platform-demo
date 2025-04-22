@@ -134,3 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Custom
+**/.DS_Store
+server/circuits/
+server/proofs/
+server/trusted_setup/
